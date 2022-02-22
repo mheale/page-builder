@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://github.com/mheale/page-builder/blob/e9176190043d7fc35888b6192caae8d85c4482e3/components-style.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title></title>
+  </head>
+  <style>
+    *{
+      box-sizing:border-box;
+      margin:0;
+    }
+    html {
+      background-color:#f4f4f4;
+      height:100%;
+      font-size:16px;
+      font-family: Arrival Apercu Pro, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    }
+    a{
+      text-decoration:none;
+      color:inherit;
+    }
+    [contenteditable] {
+      outline: 0px solid transparent;
+    }
+    .pb-header{
+      position:fixed;
+      width:100%;
+      height:4rem;
+      background-color:#e8e8e8;
+      padding:1rem;
+      top:0;
+      z-index:1;
+    }
+    .pb-header button{
+      outline:0;
+      border:none;
+      background-color:#2044ff;
+      max-height:1.75rem;
+    }
+    .pb-header button:hover{
+      background-color:#ffffff;
+      color:#000000;
+    }
+    .pb-nav-btn{
+      width:auto;
+      height:2rem;
+      font-family: Arrival Apercu Mono Pro, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      text-transform:uppercase;
+      font-size:11.25px;
+      line-height:14px;
+      padding:8px 12px 8px 12px;
+      margin-right:0.5rem;
+    }
+    .menu{
+      padding:8px 12px 8px 40px;
+      background-image: url("data:image/svg+xml,%0A%3Csvg width='12' height='12' viewBox='0 0 12 12' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 0H0V3H3V0ZM12 0H9V3H12V0ZM9 9H12V12H9V9ZM3 9H0V12H3V9Z' fill='%230F1011'/%3E%3C/svg%3E%0A");
+      background-repeat:no-repeat;
+      background-position:1rem center;
+      width:auto;
+      background-color:#ffffff;
+    }
+    .focussed{
+      background-color:#000000;
+      color:#ffffff;
+    }
+    .unfocussed{
+      background-color:#ffffff;
+    }
+    .unfocussed:hover{
+      background-color:#2044ff;
+      color:#ffffff;
+      cursor:pointer;
+    }
+    .componentbtn{
+    height:4rem;
+    width:6.5rem;
+    margin:0.5rem;
+    text-align: center;
+    background-color: #e8e8e8;
+    color:#000000;
+    border:none;
+    outline:;
+    border-radius: 4px;
+    cursor: pointer;
+    }
+    .componentbtn:hover{
+    background-color: #ffffff;
+    color:#000000;
+    }
+    .pb-component-btns{
+   position:fixed;
+   width:18rem;
+    }
+    .pb-page-container {
+      display: flex;
+      height:100%;
+      margin-top:64px;
+    }
+    .pb-left-tools {
+      width: 18rem;
+      min-width: 18rem;
+      min-height:calc(100vh - 64px);
+      overflow:hidden;
+      border: 1px solid #f2f2f2;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      clip-path: inset(0px -10px 0px 0px);
+    }
+  .pb-left-tools-component-menu{
+    position:fixed;
+    width:18rem;
+    height:calc(100vh - 180px);
+    overflow-y:auto;
+    z-index: 99999;
+  }
+    .pb-left-tools-back{
+      position:fixed;
+      width:18rem;
+      height:4rem;
+      background-color:#000000;
+      color:#ffffff;
+      bottom:0;
+      left:0;
+      font-family: Arrival Apercu Mono Pro, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      text-transform:uppercase;
+      font-size:11.25px;
+      line-height:14px;
+      padding:1.75rem 1rem;
+    }
+    .pb-left-tools-back:hover{
+      background-color:#2044ff;
+      color:#ffffff;
+      cursor:pointer;
+    }
+    .pb-left-tools-save{
+      position:fixed;
+      width:9rem;
+      height:2.5rem;
+      background-color:#e8e8e8;
+      color:#000000;
+      bottom:64px;
+      font-family: Arrival Apercu Mono Pro, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      text-transform:uppercase;
+      font-size:11.25px;
+      line-height:0.5rem;
+      padding:1.75rem 1rem;
+      left:9rem;
+    }
+    .pb-left-tools-save:hover,.pb-left-tools-load:hover{
+      background-color:#2044ff;
+      color:#ffffff;
+      cursor:pointer;
+    }
+    .pb-left-tools-load{
+      position:fixed;
+      width:9rem;
+      height:2.5rem;
+      background-color:#ffffff;
+      color:#000000;
+      bottom:64px;
+      left:0;
+      font-family: Arrival Apercu Mono Pro, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      text-transform:uppercase;
+      font-size:11.25px;
+      line-height:0.5rem;
+      padding:1.75rem 1rem;
+    }
+    .pb-page {
+      flex-grow: 1;
+      background-color:#ffffff;
+      color:#000000;
+      padding:1rem;
+      line-height:2rem;
+      font-size:20px;
+      font-weight:300;
+      overflow-x: hidden;
+      overflow-y:auto;
+    }
+    .pb-right-tools {
+      width: 14rem;;
+      min-width: 14rem;
+      max-width: 14rem;
+      min-height:calc(100vh - 64px);
+      overflow:hidden;
+    }
+    .pb-left-tools + .pb-right-tools{
+      margin-left: 2%;
+    }
+    .pb-right-tools-generate{
+      position:fixed;
+      width:14rem;
+      height:4rem;
+      background-color:#2044ff;
+      color:#ffffff;
+      bottom:0;
+      right:0;
+      font-family: Arrival Apercu Mono Pro, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+        "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      text-transform:uppercase;
+      font-size:11.25px;
+      line-height:14px;
+      padding:1.75rem 1rem;
+      cursor:pointer;
+    }
+    .pb-right-tools-generate:hover{
+      background-color:#ffffff;
+      color:#000000;
+    }
+    dialog{
+      position: fixed;
+       top: 50%;
+       left: 50%;
+       width: 600px;
+       margin-left: -300px;
+       height: 600px;
+       margin-top: -300px;
+       background: #e8e8e8;
+       border-radius:4px;
+       border:0px;
+    }
+    .dialogclose{
+      float:right;
+      margin-top:1em;
+    }
+    .createdownload{
+      margin-top:1em;
+    }
+    textarea {
+     width:100%;
+     min-height:350px;
+     margin-top:1em;
+     resize:none;
+     border:0.5px solid #000000;
+     outline:none;
+    }
+    .resizable {
+      display: inline-block;
+      resize: horizontal;
+      overflow: hidden;
+      max-width:100%;
+      line-height: 0;
+      }
+    .resizable img {
+      width: 100%;
+      height: auto;
+    }
+    ::-webkit-resizer {
+      background:#2044ff;
+  background-image: url("data:image/svg+xml,%3Csvg width='18px' height='18px' version='1.1' viewBox='0 0 1200 1200' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%23fff' stroke-linecap='round' stroke-linejoin='round' stroke-width='3'%3E%3Cpath transform='scale(12)' d='m25.5 39.52v-14h14'/%3E%3Cpath transform='scale(12)' d='m74.48 61.5v14h-14'/%3E%3Cpath transform='scale(12)' d='m32.96 33.49h34.05v34.05h-34.05z'/%3E%3C/g%3E%3C/svg%3E");
+  }
+  #page-builder{
+    min-width:800px;
+    min-height:500px;
+  }
+  body {counter-reset:section;}
+  div #pb-section-numbering h3 {
+  counter-reset:subsection;
+  font-weight:500;
+  font-size:20px;
+  line-height:30px;
+  font-family: Arrival Apercu Pro, -apple-system, BlinkMacSystemFont,
+  "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  margin-bottom:0.5rem;
+  }
+  div #pb-section-numbering p {
+  margin-left:1.7rem;
+  }
+  div #pb-section-numbering h3:before
+  {
+  counter-increment:section;
+  content:"" counter(section) ". ";
+  margin-right: 0.5rem;
+  }
+  div #pb-section-numbering p:before
+  {
+  counter-increment:subsection;
+  content:counter(section) "." counter(subsection) " ";
+  margin-right: 0.5rem;
+  }
+  .mono{
+  font-family: Arrival Apercu Mono Pro, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  text-transform:uppercase;
+  font-size:11.25px;
+  line-height:14px;
+}
+  </style>
+  <body>
+    <div class="pb-header">
+      <span class="pb-nav-btn menu">Learning center</span>
+      <a href="page-builder-home.html"><span class="pb-nav-btn unfocussed">page builder</span></a>
+      <span class="pb-nav-btn focussed">new page builder</span>
+        <div class="w3-dropdown-hover w3-right" style="margin-left:8rem;">
+          <button class="w3-button mono w3-hover-black w3-white">text options
+            <i class="fa fa-angle-down"></i>
+          </button>
+          <div class="w3-dropdown-content w3-bar-block">
+            <a onclick="onH1Click()" class="w3-bar-item w3-button w3-hover-light-grey mono">title</a>
+            <a onclick="onH2Click()" class="w3-bar-item w3-button w3-hover-light-grey mono">heading</a>
+            <a onclick="onH3Click()" class="w3-bar-item w3-button w3-hover-light-grey mono">sub</a>
+            <a onclick="onBodyClick()" class="w3-bar-item w3-button w3-hover-light-grey mono">body</a>
+            <a onclick="onBoldClick()" class="w3-bar-item w3-button w3-hover-light-grey mono">bold</a>
+            <a onclick="onItalicClick()" class="w3-bar-item w3-button w3-hover-light-grey mono">italic</a>
+            <a onclick="onUnderlineClick()" class="w3-bar-item w3-button w3-hover-light-grey mono">underline</a>
+          </div>
+        </div>
+    </div>
+<div class="pb-page-container">
+  <!--component buttons-->
+  <div class="pb-left-tools mono" style="width:18rem;">
+<!--text component accordian -->
+<div class="pb-left-tools-component-menu">
+<button style="cursor:default;" class="w3-button w3-block w3-black w3-hover-black w3-left-align mono">page blocks
+</button>
+    <button onclick="componentMenu('text-components')" class="w3-button w3-block  w3-left-align mono">texts
+    <i class="fa fa-angle-down"></i>
+    </button>
+
+<div id="text-components" class="w3-hide">
+  <a onclick="insertTitle()" class="w3-button w3-block w3-white w3-left-align">title</a>
+  <a onclick="insertTitleHeading()" class="w3-button w3-block w3-white w3-left-align">title and heading</a>
+  <a onclick="insertParagraph()" class="w3-button w3-block w3-white w3-left-align">paragraph</a>
+  <a onclick="insertParagraphTitle()" class="w3-button w3-block w3-white w3-left-align">paragraph with title</a>
+</div>
+
+<!--list component accordian -->
+<button onclick="componentMenu('lists-components')" class="w3-button w3-block w3-left-align mono">lists
+<i class="fa fa-angle-down"></i>
+</button>
+<!--buttons with script function -->
+<div id="lists-components" class="w3-hide">
+<a onclick="insertNumberList()" class="w3-button w3-block w3-white w3-left-align">numbered list</a>
+<a onclick="insertAlphaList()" class="w3-button w3-block w3-white w3-left-align">alphabet list</a>
+<a onclick="insertBulletList()" class="w3-button w3-block w3-white w3-left-align">bullet list</a>
+<a onclick="insertContinueNumberList()" class="w3-button w3-block w3-white w3-left-align">continued number list</a>
+</div>
+
+<!--admonitions component accordian -->
+<button onclick="componentMenu('admonitions-components')" class="w3-button w3-block w3-left-align mono">admonitions
+<i class="fa fa-angle-down"></i>
+</button>
+<!--buttons with script function -->
+<div id="admonitions-components" class="w3-hide">
+<a onclick="insertNoteAdmonition()" class="w3-button w3-block w3-white w3-left-align">note</a>
+<a onclick="insertCautionAdmonition()" class="w3-button w3-block w3-white w3-left-align">caution</a>
+<a onclick="insertWarningAdmonition()" class="w3-button w3-block w3-white w3-left-align">warning</a>
+<a onclick="insertDangerAdmonition()" class="w3-button w3-block w3-white w3-left-align">danger</a>
+</div>
+
+<!--images component accordian -->
+<button onclick="componentMenu('images-components')" class="w3-button w3-block w3-left-align mono">images
+<i class="fa fa-angle-down"></i>
+</button>
+
+<div id="images-components" class="w3-hide">
+<a onclick="insertTitle()" class="w3-button w3-block w3-white w3-left-align">image</a>
+<a onclick="insertTitleHeading()" class="w3-button w3-block w3-white w3-left-align">full-width-image</a>
+<a onclick="insertContinueNumberList()" class="w3-button w3-block w3-white w3-left-align">side-by-side-image</a>
+<a onclick="insertContinueNumberList()" class="w3-button w3-block w3-white w3-left-align">image with caption</a>
+</div>
+
+<!--interactive component accordian -->
+<button onclick="componentMenu('interactive-components')" class="w3-button w3-block w3-left-align mono">interactive
+<i class="fa fa-angle-down"></i>
+</button>
+
+<div id="interactive-components" class="w3-hide">
+<a onclick="insertTitle()" class="w3-button w3-block w3-white w3-left-align">labelled image</a>
+<a onclick="insertTitleHeading()" class="w3-button w3-block w3-white w3-left-align">question component</a>
+</div>
+</div>
+    <div id="load" class="pb-left-tools-load">load temporary</div>
+    <div id="save" class="pb-left-tools-save">temporary save</div>
+    <a href="page-builder-home.html">
+    <div class="pb-left-tools-back">back to main menu</div></a>
+  </div>
+    <div id="content" class="pb-page">
+      <div id="page-builder" style="display:inline-block" contenteditable="true" class="componenthover"></div>
+    </div>
+      <div class="pb-right-tools">
+          <textarea id="page-builder-html"></textarea>
+          <div id="generate" class="pb-right-tools-generate">generate markup</div>
+      </div>
+      <dialog id="dialog">
+        <h2>Success!</h2
+        <br>
+        <p>Page Builder has copied your markup to the clipboard.</p>
+        <textarea readonly id="generatedmarkup"></textarea>
+        <button class="pb-nav-btn focussed dialogclose" onclick="window.dialog.close();">close</button>
+        <button class="pb-nav-btn focussed createdownload" id="create">download instead?</button>
+        <br>
+        <a download="page-builder-markup.txt" id="downloadlink" style="display: none">Save me</a>
+      </dialog>
+</div>
+
+<script>
+//download markup
+(function () {
+var textFile = null,
+  makeTextFile = function (text) {
+    var data = new Blob([text], {type: 'text/plain'});
+
+    // If we are replacing a previously generated file we need to
+    // manually revoke the object URL to avoid memory leaks.
+    if (textFile !== null) {
+      window.URL.revokeObjectURL(textFile);
+    }
+
+    textFile = window.URL.createObjectURL(data);
+
+    return textFile;
+  };
+
+
+  var create = document.getElementById('create'),
+    textbox = document.getElementById('generatedmarkup');
+
+  create.addEventListener('click', function () {
+    var link = document.getElementById('downloadlink');
+    link.href = makeTextFile(generatedmarkup.value);
+    link.style.display = 'block';
+  }, false);
+})();
+</script>
+
+<script>
+setInterval(function() {
+  var html = document.getElementById('page-builder-html');
+  var content = document.getElementById('page-builder').innerHTML;
+  html.value = content; {
+    }
+}, 1000);
+</script>
+
+<script>
+//side menu component insert
+function componentMenu(id) {
+  var x = document.getElementById(id);
+  if (x.className.indexOf("w3-show") == -1) {
+    x.className += " w3-show";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+  }
+}
+</script>
+
+<script>
+//move div
+function moveUp(element) {
+  if(element.previousElementSibling)
+    element.parentNode.insertBefore(element, element.previousElementSibling);
+}
+function moveDown(element) {
+  if(element.nextElementSibling)
+    element.parentNode.insertBefore(element.nextElementSibling, element);
+}
+document.querySelector('#page-builder').addEventListener('click', function(e) {
+  if(e.target.className === 'down') moveDown(e.target.parentNode);
+  else if(e.target.className === 'up') moveUp(e.target.parentNode);
+});
+</script>
+
+<script>
+// paste as plain text
+document.querySelector('[contenteditable]').addEventListener('paste', function (event) {
+  event.preventDefault();
+  document.execCommand('inserttext', false, event.clipboardData.getData('text/plain'));
+});
+</script>
+
+<script>
+// Save div content to LocalStorage temporarily, load from localStorage and clearLocalStorage
+var content = document.getElementById('content'),
+    saveButton = document.getElementById('save'),
+    loadButton = document.getElementById('load');
+
+var localStore = {
+  saveLocalStorage: function() {
+    localStorage.setItem('item', content.innerHTML);
+  },
+  loadLocalStorage: function() {
+    var contentStored = localStorage.getItem('item');
+    if ( contentStored ) {
+      content.innerHTML = contentStored;
+    }
+  },
+  clearLocalStorage: function() {
+    localStorage.removeItem('item');
+  }
+};
+saveButton.addEventListener('click', function() {
+  localStore.saveLocalStorage();
+}, false);
+loadButton.addEventListener('click', function() {
+  localStore.loadLocalStorage();
+}, false);
+
+// Text styling
+function onBoldClick() {
+   document.execCommand( 'bold', false, null );
+}
+function onItalicClick() {
+   document.execCommand( 'italic', false, null );
+}
+function onUnderlineClick() {
+   document.execCommand( 'underline', false, null );
+}
+function onUnderlineClick() {
+   document.execCommand( 'underline', false, null );
+}
+function onH1Click() {
+   document.execCommand( 'formatBlock', false, 'h1' );
+}
+function onH2Click() {
+   document.execCommand( 'formatBlock', false, 'h2' );
+}
+function onH3Click() {
+   document.execCommand( 'formatBlock', false, 'h3' );
+}
+function onBodyClick() {
+   document.execCommand( 'formatBlock', false, 'p' );
+}
+</script>
+
+<script>
+//html urls
+const sectioncomponenturl = 'component-section-numbering.html';
+const pagecomponenturl = 'page-builder-v2.html';
+const componenttitleurl = 'component-title.html';
+const componenttitleheadingurl = 'component-title-heading.html';
+const componentparagraphurl = 'component-paragraph.html';
+const componentparagraphtitleurl = 'component-small-title-paragraph.html';
+const componentsectionnumberingurl = 'component-section-numbering.html';
+const componentnoteadmonitionurl = 'component-note-admonition.html';
+const componentcautionadmonitionurl = 'component-caution-admonition.html';
+const componentwarningadmonitionurl = 'component-warning-admonition.html';
+const componentdangeradmonitionurl = 'component-danger-admonition.html';
+const componentnumberedlisturl = 'component-numbered-list.html';
+const componentbulletlisturl = 'component-bullet-list.html';
+const componentalphalisturl = 'component-alpha-list.html';
+
+
+// fetch html and insert title component
+function insertTitle(){
+fetch(componenttitleurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('title');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+
+// fetch html and insert title heading component
+function insertTitleHeading(){
+fetch(componenttitleheadingurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('title-heading');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+
+// fetch html and insert paragraph component
+function insertParagraph(){
+fetch(componentparagraphurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById("paragraph");
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+
+// fetch html and insert paragraph with title component
+function insertParagraphTitle(){
+fetch(componentparagraphtitleurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('small-title-paragraph');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+
+// List - number, bullet,etc
+// fetch html and insert numbered list component
+function insertNumberList(){
+fetch(componentnumberedlisturl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('numbered-list');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+// fetch html and insert alphabet list component
+function insertAlphaList(){
+fetch(componentalphalisturl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('alpha-list');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+// fetch html and insert bulletlist component
+function insertBulletList(){
+fetch(componentbulletlisturl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('bullet-list');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+// fetch html and insert section numbering component
+function insertContinueNumberList(){
+fetch(sectioncomponenturl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('section-numbering');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+
+// Admonitions - note, caution, warning, danger
+// fetch html and insert note admonition
+function insertNoteAdmonition(){
+fetch(componentnoteadmonitionurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('note-admonition');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+// fetch html and insert caution admonition
+function insertCautionAdmonition(){
+fetch(componentcautionadmonitionurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('caution-admonition');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+// fetch html and insert warning admonition
+function insertWarningAdmonition(){
+fetch(componentwarningadmonitionurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('warning-admonition');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+// fetch html and insert danger admonition
+function insertDangerAdmonition(){
+fetch(componentdangeradmonitionurl).then(function (response) {
+// The API call was successful!
+return response.text();
+}).then(function (html) {
+// Convert the HTML string into a document object
+var parser = new DOMParser();
+var doc = parser.parseFromString(html, 'text/html');
+// get the element
+const editor = document.getElementById('page-builder');
+var sec = doc.getElementById('danger-admonition');
+// insert Html
+editor.appendChild(sec).scrollIntoView({behavior: 'smooth'});
+});
+};
+</script>
+
+<script>
+/* Get the textarea field */
+var markup = document.getElementById('generatedmarkup');
+/* Get the 'generate' button and add click event */
+document.getElementById('generate').addEventListener('click', (ev)=>{
+/* Get the component by Id and select innerHTML */
+var content = document.getElementById('page-builder').outerHTML;
+/* Replace contents of textarea with component innerHTML and remove blank lines */
+markup.value = content.replace('<div id="page-builder" style="display:inline-block" contenteditable="true" class="componenthover">', '<link rel="stylesheet" href="components-style.css"><div id="page-builder">').replaceAll('<span class="up"></span><span class="down"></span>', "").replaceAll('div class="resizable"', "div").replaceAll('div id="title"', "div").replaceAll('div id="title-heading"', "div").replaceAll('div id="paragraph"', "div").replaceAll('div id="small-title-paragraph"', "div").replaceAll('<button contenteditable="false" class="remove-element" onclick="this.parentNode.remove();">remove</button>', "").replace(/^\s*[\r\n]/gm, "");
+/* Remove resizable class from divs */
+/* select the text inside the text field */
+markup.select();
+markup.setSelectionRange(0, 99999); /* For mobile devices */
+/* Copy the text inside the text field */
+dialog.show();document.execCommand('copy');
+});
+</script>
+
+<script>
+function randomNumber(){
+document.querySelector(".divbreak").setAttribute("id", "hello")
+};
+</script>
+  </body>
+</html>
